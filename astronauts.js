@@ -62,7 +62,7 @@ astronauts.route('/astronauts')
 astronauts.route('/astronaut/:id')
   .get((req, res) => {
     var id = req.params.id
-    const i = astronautsArray.findIndex(astronaut => {return astronaut.id === id})
+    const i = astronautsArray.findIndex(astronaut => {return astronaut.id == id})
     if (i==-1) res.sendStatus(404)
     else {
       res.status(200)
@@ -71,7 +71,7 @@ astronauts.route('/astronaut/:id')
   })
   .put((req, res) => {
     var id = req.params.id
-    const i = astronautsArray.findIndex(astronaut => {return astronaut.id === id})
+    const i = astronautsArray.findIndex(astronaut => {return astronaut.id == id})
     if (i==-1) res.sendStatus(404)
     else {
       if (req.body.firstName) astronautsArray[i].firstName = req.body.firstName
