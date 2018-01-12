@@ -7,16 +7,46 @@ var uuid = require('uuid-v4');
 const astronautsArray = [
   {
     "id": "1",
-    "firstName": "ale",
-    "lastName": "ametis",
+    "firstName": "Mario",
+    "lastName": "Rossi",
     "isInSpace": "false"
+},
+{
+  "id": "2",
+  "firstName": "Mario",
+  "lastName": "Verdi",
+  "isInSpace": "false"
+},
+{
+  "id": "3",
+  "firstName": "Mario",
+  "lastName": "Rossi",
+  "isInSpace": "false"
+},
+{
+  "id": "4",
+  "firstName": "Mario",
+  "lastName": "Blu",
+  "isInSpace": "false"
 }]
 
 astronauts.route('/astronauts')
   //simpleget return all objects
-    .get((req, res) => {
-    res.status(200)
-    res.json(astronautsArray)
+  .get((req, res) => {
+    var lastName = ''
+    if (req.query.lastName) {
+      lastName = req.query.lastName
+      var checklastName = function (astronaut){
+        return astronaut.lastName == lastName
+      }
+      var array = astronautsArray.filter(checklastName, lastName)
+      res.json(array)
+    }
+    else {
+      res.status(200)
+      res.json(astronautsArray)
+    }
+
   })
 //post an object
   .post((req, res) => {
