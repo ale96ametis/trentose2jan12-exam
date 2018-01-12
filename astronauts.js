@@ -80,7 +80,11 @@ astronauts.route('/astronaut/:id')
     else {
       if (req.body.firstName) astronautsArray[i].firstName = req.body.firstName
       if (req.body.lastName) astronautsArray[i].lastName = req.body.lastName
-      if (req.body.isInSpace) astronautsArray[i].isInSpace = req.body.isInSpace
+      if (req.body.isInSpace) {
+        astronaut.isInSpace = true
+      } else {
+        astronaut.isInSpace = false
+      }
       res.status(200)
       res.json(astronautsArray[i])
     }
