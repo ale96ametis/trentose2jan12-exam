@@ -4,7 +4,13 @@ const astronauts = express.Router()
 
 var uuid = require('uuid-v4');
 
-const astronautsArray = []
+const astronautsArray = [
+  {
+    "id": "1",
+    "firstName": "ale",
+    "lastName": "ametis",
+    "isInSpace": "false"
+}]
 
 astronauts.route('/astronauts')
   //simpleget return all objects
@@ -22,6 +28,16 @@ astronauts.route('/astronauts')
     astronautsArray.push(astronaut)
     res.status(200)
     res.json(astronaut)
+  });
+astronauts.route('/astronaut/:id')
+  .get((req, res) => {
+    var id = req.params.id
+    const i = astronautsArray.findIndex(astronaut => {return astronaut.id === id})
+    if (i==-1) res.sendStatus(404)
+    else {
+      res.status(200)
+      res.json(astronautsArray[i])
+    }
   });
 
 
