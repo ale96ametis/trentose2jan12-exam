@@ -2,7 +2,7 @@ swagger: "2.0"
 info:
   version: 1.0.0
   title: "trentose2jan12-exam-aleametis"
-  description: A sample API that uses a petstore as an example to demonstrate features in the swagger-2.0 specification
+  description: API of service to get and set information about astronauts
   termsOfService: http://swagger.io/terms/
   contact:
     name: Swagger API Team
@@ -11,7 +11,7 @@ info:
   license:
     name: MIT
     url: http://github.com/gruntjs/grunt/blob/master/LICENSE-MIT
-host: petstore.swagger.io
+host: trentose2jan12-aleametis.herokuapp.com
 basePath: /api
 schemes:
   - http
@@ -20,112 +20,108 @@ consumes:
 produces:
   - application/json
 paths:
-  /pets:
+  /astronauts:
     get:
       description: |
-        Returns all pets from the system that the user has access to
-        Nam sed condimentum est. Maecenas tempor sagittis sapien, nec rhoncus sem sagittis sit amet. Aenean at gravida augue, ac iaculis sem. Curabitur odio lorem, ornare eget elementum nec, cursus id lectus. Duis mi turpis, pulvinar ac eros ac, tincidunt varius justo. In hac habitasse platea dictumst. Integer at adipiscing ante, a sagittis ligula. Aenean pharetra tempor ante molestie imperdiet. Vivamus id aliquam diam. Cras quis velit non tortor eleifend sagittis. Praesent at enim pharetra urna volutpat venenatis eget eget mauris. In eleifend fermentum facilisis. Praesent enim enim, gravida ac sodales sed, placerat id erat. Suspendisse lacus dolor, consectetur non augue vel, vehicula interdum libero. Morbi euismod sagittis libero sed lacinia.
-        Sed tempus felis lobortis leo pulvinar rutrum. Nam mattis velit nisl, eu condimentum ligula luctus nec. Phasellus semper velit eget aliquet faucibus. In a mattis elit. Phasellus vel urna viverra, condimentum lorem id, rhoncus nibh. Ut pellentesque posuere elementum. Sed a varius odio. Morbi rhoncus ligula libero, vel eleifend nunc tristique vitae. Fusce et sem dui. Aenean nec scelerisque tortor. Fusce malesuada accumsan magna vel tempus. Quisque mollis felis eu dolor tristique, sit amet auctor felis gravida. Sed libero lorem, molestie sed nisl in, accumsan tempor nisi. Fusce sollicitudin massa ut lacinia mattis. Sed vel eleifend lorem. Pellentesque vitae felis pretium, pulvinar elit eu, euismod sapien.
-      operationId: findPets
+        Return all the astronauts and can filter the result by lastName
+      operationId: findAstronauts
       parameters:
-        - name: tags
+        - name: lastName
           in: query
-          description: tags to filter by
+          description: tag to filter by lastName
           required: false
-          type: array
-          collectionFormat: csv
-          items:
-            type: string
-        - name: limit
-          in: query
-          description: maximum number of results to return
-          required: false
-          type: integer
-          format: int32
+          type: string
       responses:
         200:
           description: pet response
           schema:
             type: array
             items:
-              $ref: '#/definitions/Pet'
+              $ref: '#/definitions/Astronaut'
         default:
           description: unexpected error
           schema:
             $ref: '#/definitions/Error'
     post:
-      description: Creates a new pet in the store.  Duplicates are allowed
-      operationId: addPet
+      description: Creates a new astronaut
+      operationId: addAstronaut
       parameters:
-        - name: pet
+        - name: astronaut
           in: body
-          description: Pet to add to the store
+          description: Astronaut to add to the collection
           required: true
           schema:
-            $ref: '#/definitions/NewPet'
+            $ref: '#/definitions/NewAstronaut'
       responses:
         200:
-          description: pet response
+          description: astronaut response
           schema:
-            $ref: '#/definitions/Pet'
+            $ref: '#/definitions/Astronaut'
         default:
           description: unexpected error
           schema:
             $ref: '#/definitions/Error'
-  /pets/{id}:
+  /astronaut/{id}:
     get:
-      description: Returns a user based on a single ID, if the user does not have access to the pet
-      operationId: find pet by id
+      description: Returns a single astronaut based on a ID
+      operationId: find astronaut by id
       parameters:
         - name: id
           in: path
-          description: ID of pet to fetch
+          description: ID of astronaut to fetch
           required: true
-          type: integer
-          format: int64
+          type: string
       responses:
         200:
-          description: pet response
+          description: astronaut response
           schema:
-            $ref: '#/definitions/Pet'
-        default:
+            $ref: '#/definitions/Astronaut'
+        404:
           description: unexpected error
           schema:
             $ref: '#/definitions/Error'
-    delete:
-      description: deletes a single pet based on the ID supplied
-      operationId: deletePet
+    put:
+      description: modify a single astronaut based on the ID supplied
+      operationId: modifyAstronaut
       parameters:
         - name: id
           in: path
-          description: ID of pet to delete
+          description: ID of astronaut to modify
           required: true
-          type: integer
-          format: int64
+          type: string
+        - name: astronaut
+          in: body
+          description: attributes to modify
+          required: true
+          schema:
+            $ref: '#/definitions/NewAstronaut'
       responses:
-        204:
-          description: pet deleted
-        default:
+        200:
+          description: astronaut modified
+          schema:
+            $ref: '#/definitions/Astronaut'
+        404:
           description: unexpected error
           schema:
             $ref: '#/definitions/Error'
 definitions:
-  Pet:
+  Astronaut:
     allOf:
-      - $ref: '#/definitions/NewPet'
+      - $ref: '#/definitions/NewAstronaut'
       - required:
         - id
         properties:
           id:
-            type: integer
-            format: int64
-  NewPet:
+            type: string
+  NewAstronaut:
     required:
-      - name
+      - isInSpace
     properties:
-      name:
+      isInSpace:
+        type: boolean
+      firstName:
         type: string
-      tag:
+      lastName:
         type: string
   Error:
     required:
