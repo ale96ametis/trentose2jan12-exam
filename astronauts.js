@@ -19,7 +19,7 @@ astronauts.route('/astronauts')
     if (req.body.firstName) astronaut.firstName = req.body.firstName
     if (req.body.lastName) astronaut.lastName = req.body.lastName
     if (req.body.isInSpace) astronaut.isInSpace = req.body.isInSpace
-    astronauts.push(astronaut)
+    astronautsArray.push(astronaut)
     res.status(200)
     res.json(astronaut)
   });
