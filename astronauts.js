@@ -9,25 +9,25 @@ const astronautsArray = [
     "id": "1",
     "firstName": "Mario",
     "lastName": "Rossi",
-    "isInSpace": "false"
+    "isInSpace": true
 },
 {
   "id": "2",
   "firstName": "Mario",
   "lastName": "Verdi",
-  "isInSpace": "false"
+  "isInSpace": false
 },
 {
   "id": "3",
   "firstName": "Mario",
   "lastName": "Rossi",
-  "isInSpace": "false"
+  "isInSpace": false
 },
 {
   "id": "4",
   "firstName": "Mario",
   "lastName": "Blu",
-  "isInSpace": "false"
+  "isInSpace": false
 }]
 
 astronauts.route('/astronauts')
@@ -54,7 +54,11 @@ astronauts.route('/astronauts')
     astronaut.id = uuid()
     if (req.body.firstName) astronaut.firstName = req.body.firstName
     if (req.body.lastName) astronaut.lastName = req.body.lastName
-    if (req.body.isInSpace) astronaut.isInSpace = req.body.isInSpace
+    if (req.body.isInSpace) {
+      astronaut.isInSpace = true
+    } else {
+      astronaut.isInSpace = false
+    }
     astronautsArray.push(astronaut)
     res.status(200)
     res.json(astronaut)
